@@ -5,6 +5,7 @@ export const API = {
 	REGISTER_URL: baseURL + "users/register",
 	PROFILE_URL: baseURL + "users/profile",
 	SEND_INVITE_URL: baseURL + "users/invitation",
+	TOPIC_URL: baseURL + "qns/topic",
 };
 
 interface ApiInterface {
