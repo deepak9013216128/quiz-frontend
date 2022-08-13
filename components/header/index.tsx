@@ -1,8 +1,14 @@
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { Col, Image, Nav, Navbar, Row, Container } from "react-bootstrap";
 
 export default function Header() {
 	const router = useRouter();
+	const [role, setRole] = useState("");
+	useEffect(() => {
+		setRole(localStorage.getItem("role") as string);
+	}, []);
+
 	return (
 		<Navbar bg="dark" variant="dark">
 			<Container>
@@ -20,23 +26,45 @@ export default function Header() {
 					activeKey="/home"
 					onSelect={(selectedKey) => router.push(selectedKey as string)}
 				>
+					{role === "student" && (
+						<>
+							<Nav.Item>
+								<Nav.Link eventKey="/invitation">Invitation</Nav.Link>
+							</Nav.Item>
+							<Nav.Item>
+								<Nav.Link eventKey="/history">History</Nav.Link>
+							</Nav.Item>
+							<Nav.Item>
+								<Nav.Link eventKey="/performance">Performance</Nav.Link>
+							</Nav.Item>
+						</>
+					)}
+					{role === "instructor" ||
+						(role === "admin" && (
+							<>
+								<Nav.Item>
+									<Nav.Link eventKey="/qns">Qns</Nav.Link>
+								</Nav.Item>
+								<Nav.Item>
+									<Nav.Link eventKey="/topic">Topic</Nav.Link>
+								</Nav.Item>
+								<Nav.Item>
+									<Nav.Link eventKey="/send-quiz-invitation">
+										Send Invitation
+									</Nav.Link>
+								</Nav.Item>
+							</>
+						))}
+					{role === "admin" && (
+						<Nav.Item>
+							<Nav.Link eventKey="/invite-user">Invitate User</Nav.Link>
+						</Nav.Item>
+					)}
 					<Nav.Item>
-						<Nav.Link eventKey="/qns">Qns</Nav.Link>
+						<Nav.Link eventKey="/profile">Profile</Nav.Link>
 					</Nav.Item>
 					<Nav.Item>
-						<Nav.Link eventKey="/topic">Topic</Nav.Link>
-					</Nav.Item>
-					<Nav.Item>
-						<Nav.Link eventKey="/send-invitation">Send Invitation</Nav.Link>
-					</Nav.Item>
-					<Nav.Item>
-						<Nav.Link eventKey="/invitation">Invitation</Nav.Link>
-					</Nav.Item>
-					<Nav.Item>
-						<Nav.Link eventKey="/history">History</Nav.Link>
-					</Nav.Item>
-					<Nav.Item>
-						<Nav.Link eventKey="/performance">Performance</Nav.Link>
+						<Nav.Link eventKey="/logout">Logout</Nav.Link>
 					</Nav.Item>
 				</Nav>
 			</Container>

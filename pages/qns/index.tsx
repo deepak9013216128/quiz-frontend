@@ -11,6 +11,7 @@ import TopicDrodown from "../../components/topic-dropdown";
 import QnsForm from "../../components/qns-form";
 import { Plus } from "react-bootstrap-icons";
 import QnsList from "../../components/qns-list";
+import { useQns } from "../../hooks/useQns";
 
 const Qns: NextPage = () => {
 	const router = useRouter();
@@ -19,6 +20,7 @@ const Qns: NextPage = () => {
 	const [topic, setTopic] = useState("");
 	const [subTopic, setSubTopic] = useState("");
 	const [createQns, setCreateQns] = useState(false);
+
 	useEffect(() => {
 		const fetchTopics = async () => {
 			const topics = await getTopic();

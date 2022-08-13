@@ -21,7 +21,7 @@ const Login: NextPage = () => {
 		e.preventDefault();
 
 		await login({ email: input.email, password: input.password });
-		router.push("/send-invitation");
+		router.push("/topic");
 	};
 
 	return (

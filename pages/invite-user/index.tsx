@@ -6,7 +6,7 @@ import Footer from "../../components/footer";
 import Header from "../../components/header";
 import { sendInvitation } from "../../services/user";
 
-const Invitation: NextPage = () => {
+const InviteUser: NextPage = () => {
 	const router = useRouter();
 	const [input, setInput] = useState({
 		email: "",
@@ -35,7 +35,7 @@ const Invitation: NextPage = () => {
 			<Container className="mb-3 mt-3">
 				<Row className="justify-content-md-center">
 					<Col xs md={6} lg={4}>
-						<h1 className="h1 text-center">Send Invite</h1>
+						<h1 className="h1 text-center">Invite User</h1>
 						{url && (
 							<Form.Group className="mb-3" controlId="formBasicurl">
 								<Form.Label>Url</Form.Label>
@@ -90,4 +90,4 @@ const Invitation: NextPage = () => {
 	);
 };
 
-export default Invitation;
+export default InviteUser;

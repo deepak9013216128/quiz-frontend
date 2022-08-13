@@ -40,5 +40,6 @@ export const getQns = async ({ topic, subTopic }: getQnsInterface) => {
 		return response?.qns;
 	} catch (err) {
 		console.log(err);
+		return [];
 	}
 };

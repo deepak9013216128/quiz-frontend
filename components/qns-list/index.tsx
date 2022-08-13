@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import { createQns, getQns } from "../../services/qns";
 import Qns from "./qns";
+import { useQns } from "../../hooks/useQns";
 
 interface Props {
 	topic: string;
@@ -11,20 +12,11 @@ interface Props {
 }
 
 function QnsList({ topic, subTopic }: Props) {
-	const [qns, setQns] = useState([]);
-
-	useEffect(() => {
-		const fetchQns = async () => {
-			const qns = await getQns({ topic, subTopic });
-			setQns(qns ?? []);
-		};
-
-		fetchQns();
-	}, [topic, subTopic]);
+	const qns: any = useQns({ topic, subTopic });
 
 	return (
 		<Stack gap={3}>
-			{qns.map((q: any) => (
+			{qns?.map((q: any) => (
 				<Qns key={q._id} qns={q} />
 			))}
 		</Stack>
