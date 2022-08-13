@@ -10,7 +10,7 @@ import { PencilSquare } from "react-bootstrap-icons";
 import Link from "next/link";
 import CustomTable from "../../components/custom-table";
 
-const Login: NextPage = () => {
+const Topic: NextPage = () => {
 	const router = useRouter();
 	const [headers] = useState(["#", "Title", "Description", "Add SubTopic"]);
 	const [topics, setTopics] = useState([]);
@@ -95,4 +95,4 @@ const Login: NextPage = () => {
 	);
 };
 
-export default Login;
+export default Topic;

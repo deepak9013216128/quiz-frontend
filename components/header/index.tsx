@@ -21,7 +21,10 @@ export default function Header() {
 					onSelect={(selectedKey) => router.push(selectedKey as string)}
 				>
 					<Nav.Item>
-						<Nav.Link eventKey="/topic">topic</Nav.Link>
+						<Nav.Link eventKey="/qns">Qns</Nav.Link>
+					</Nav.Item>
+					<Nav.Item>
+						<Nav.Link eventKey="/topic">Topic</Nav.Link>
 					</Nav.Item>
 					<Nav.Item>
 						<Nav.Link eventKey="/send-invitation">Send Invitation</Nav.Link>
