@@ -6,6 +6,7 @@ export const API = {
 	PROFILE_URL: baseURL + "users/profile",
 	SEND_INVITE_URL: baseURL + "users/invitation",
 	TOPIC_URL: baseURL + "qns/topics",
+	QNS_URL: baseURL + "qns",
 };
 
 interface ApiInterface {
