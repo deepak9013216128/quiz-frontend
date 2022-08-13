@@ -40,3 +40,37 @@ export const getTopic = async () => {
 		console.log(err);
 	}
 };
+
+export const createSubTopic = async ({
+	title,
+	description,
+	topicId,
+}: subTopicInterface) => {
+	try {
+		const response: any = await FETCH({
+			url: API.TOPIC_URL + "/" + topicId,
+			method: "POST",
+			body: { title, description },
+		});
+		if (!response.status) {
+			throw new Error(response.message);
+		}
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+export const getSubTopic = async (topicId: string) => {
+	try {
+		const response: any = await FETCH({
+			url: API.TOPIC_URL + "/" + topicId,
+		});
+		const { status, subTopic, message } = response;
+		if (!status) {
+			throw new Error(message);
+		}
+		return subTopic;
+	} catch (err) {
+		console.log(err);
+	}
+};

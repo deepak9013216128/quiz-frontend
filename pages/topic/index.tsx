@@ -6,9 +6,13 @@ import Footer from "../../components/footer";
 import Header from "../../components/header";
 import { createTopic, getTopic } from "../../services/topic";
 import Table from "react-bootstrap/Table";
+import { PencilSquare } from "react-bootstrap-icons";
+import Link from "next/link";
+import CustomTable from "../../components/custom-table";
 
 const Login: NextPage = () => {
 	const router = useRouter();
+	const [headers] = useState(["#", "Title", "Description", "Add SubTopic"]);
 	const [topics, setTopics] = useState([]);
 	const [input, setInput] = useState({
 		title: "",
@@ -23,13 +27,13 @@ const Login: NextPage = () => {
 		e.preventDefault();
 		await createTopic({ ...input });
 		const topics = await getTopic();
-		setTopics(topics);
+		setTopics(topics ?? []);
 	};
 
 	useEffect(() => {
 		const fetchTopics = async () => {
 			const topics = await getTopic();
-			setTopics(topics);
+			setTopics(topics ?? []);
 		};
 		fetchTopics();
 	}, []);
@@ -70,26 +74,19 @@ const Login: NextPage = () => {
 				</Row>
 				<Row className="mt-5 justify-content-md-center">
 					<Col lg={8}>
-						<Table striped>
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Title</th>
-									<th>Description</th>
-									<th>Add SubTopic</th>
-								</tr>
-							</thead>
-							<tbody>
-								{topics.map((topic: any, i) => (
-									<tr key={topic._id}>
-										<td>{i + 1}</td>
-										<td>{topic.title}</td>
-										<td>{topic.description}</td>
-										<td>{topic._id}</td>
-									</tr>
-								))}
-							</tbody>
-						</Table>
+						<CustomTable
+							headers={headers}
+							body={topics.map((topic: any, i) => [
+								i + 1,
+								topic.title,
+								topic.description,
+								<Link key={topic._id} href={`/topic/${topic._id}`}>
+									<a>
+										<PencilSquare color="royalblue" />
+									</a>
+								</Link>,
+							])}
+						/>
 					</Col>
 				</Row>
 			</Container>
