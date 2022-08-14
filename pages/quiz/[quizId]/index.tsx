@@ -19,6 +19,13 @@ const Quiz: NextPage = () => {
 		<div className="d-flex flex-column min-vh-100">
 			<Header />
 			<Container className="mb-3 mt-3">
+				<Row>
+					<Col>
+						<Button variant="dark" onClick={() => router.back()}>
+							Go Back
+						</Button>
+					</Col>
+				</Row>
 				<Row className="justify-content-md-center">
 					<Col xs={8} md={6} lg={8}>
 						<h1 className="h1 ">Quiz</h1>

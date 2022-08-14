@@ -25,6 +25,13 @@ const QuizFrom: NextPage = () => {
 		<div className="d-flex flex-column min-vh-100">
 			<Header />
 			<Container className="mb-3 mt-3">
+				<Row>
+					<Col>
+						<Button variant="dark" onClick={() => router.back()}>
+							Go Back
+						</Button>
+					</Col>
+				</Row>
 				<Row className="justify-content-md-center">
 					<Col xs md={6} lg={4}>
 						<h1 className="h1 text-center">Create Quiz</h1>
