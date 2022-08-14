@@ -1,8 +1,7 @@
-import { Badge, Card, ListGroup } from "react-bootstrap";
+import { Badge, Button, Card, ListGroup } from "react-bootstrap";
 import { PencilSquare } from "react-bootstrap-icons";
 
-const Qns = ({ qns }: any) => {
-	console.log(qns);
+const Qns = ({ qns, addQnsInQuiz }: any) => {
 	return (
 		<Card>
 			<Card.Header>
@@ -41,9 +40,13 @@ const Qns = ({ qns }: any) => {
 				<Card.Text>
 					Duration of Qns <strong>{qns?.durationOfQns} </strong>sec
 				</Card.Text>
-				<Card.Link className="ml-auto">
-					<PencilSquare />
-				</Card.Link>
+				{addQnsInQuiz ? (
+					<Button onClick={() => addQnsInQuiz(qns._id)}>Add Qns</Button>
+				) : (
+					<Card.Link className="ml-auto">
+						<PencilSquare />
+					</Card.Link>
+				)}
 			</Card.Footer>
 		</Card>
 	);

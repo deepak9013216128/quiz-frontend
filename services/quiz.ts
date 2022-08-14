@@ -34,3 +34,33 @@ export const getQuiz = async () => {
 		return [];
 	}
 };
+
+export const addQnsInQuiz = async (quizId: string, qnsId: string) => {
+	try {
+		const response: any = await FETCH({
+			url: API.QUIZ_URL + "/" + quizId,
+			method: "POST",
+			body: { qnsId },
+		});
+		if (!response.status) {
+			throw new Error(response.message);
+		}
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+export const getQnsFromQuiz = async (quizId: string) => {
+	try {
+		const response: any = await FETCH({
+			url: API.QUIZ_URL + "/" + quizId,
+		});
+		if (!response?.status) {
+			throw new Error(response.message);
+		}
+		return response?.quizQns;
+	} catch (err) {
+		console.log(err);
+		return [];
+	}
+};
