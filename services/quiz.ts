@@ -64,3 +64,38 @@ export const getQnsFromQuiz = async (quizId: string) => {
 		return [];
 	}
 };
+
+export const getQuizInvitations = async () => {
+	try {
+		const response: any = await FETCH({
+			url: API.QUIZ_INVITATION_URL,
+		});
+		if (!response?.status) {
+			throw new Error(response.message);
+		}
+		return response?.quizInvitation;
+	} catch (err) {
+		console.log(err);
+		return [];
+	}
+};
+
+interface sqiInterface {
+	email: string;
+	quizId: string;
+}
+
+export const sendQuizInvitations = async (body: sqiInterface) => {
+	try {
+		const response: any = await FETCH({
+			url: API.QUIZ_INVITATION_URL,
+			method: "POST",
+			body,
+		});
+		if (!response?.status) {
+			throw new Error(response.message);
+		}
+	} catch (err) {
+		console.log(err);
+	}
+};

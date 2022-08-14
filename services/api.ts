@@ -9,6 +9,7 @@ export const API = {
 	TOPIC_URL: baseURL + "qns/topics",
 	QNS_URL: baseURL + "qns",
 	QUIZ_URL: baseURL + "quiz",
+	QUIZ_INVITATION_URL: baseURL + "quiz/invitation",
 };
 
 interface ApiInterface {
