@@ -11,7 +11,13 @@ import Link from "next/link";
 
 const Quiz: NextPage = () => {
 	const router = useRouter();
-	const [headers] = useState(["#", "Title", "Description", "Add Qns"]);
+	const [headers] = useState([
+		"#",
+		"Title",
+		"Description",
+		"No of qns",
+		"Add Qns",
+	]);
 	const quiz = useQuiz();
 
 	return (
@@ -37,6 +43,7 @@ const Quiz: NextPage = () => {
 								i + 1,
 								q?.title,
 								q?.description,
+								q?.noOfQns,
 								<Link key={q._id} href={`/quiz/${q._id}`}>
 									<a>
 										<PencilSquare color="royalblue" />
