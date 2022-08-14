@@ -59,15 +59,17 @@ export default function Header() {
 							</>
 						))}
 					{role === "admin" && (
-						<Nav.Item>
-							<Nav.Link eventKey="/invite-user">Invitate User</Nav.Link>
-						</Nav.Item>
+						<>
+							<Nav.Item>
+								<Nav.Link eventKey="/invite-user">Invitate User</Nav.Link>
+							</Nav.Item>
+							<Nav.Item>
+								<Nav.Link eventKey="/users">Users</Nav.Link>
+							</Nav.Item>
+						</>
 					)}
 					{role && (
 						<>
-							<Nav.Item>
-								<Nav.Link eventKey="/profile">Profile</Nav.Link>
-							</Nav.Item>
 							<Nav.Item>
 								<Nav.Link eventKey="/logout">Logout</Nav.Link>
 							</Nav.Item>

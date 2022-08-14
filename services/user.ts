@@ -62,3 +62,18 @@ export const register = async (password: string, token: string) => {
 		console.log(err);
 	}
 };
+
+export const getUsers = async () => {
+	try {
+		const response: any = await FETCH({
+			url: API.GET_USERS_URL,
+		});
+		if (!response?.status) {
+			throw new Error(response?.error);
+		}
+		return response?.users;
+	} catch (err) {
+		console.log(err);
+		return [];
+	}
+};

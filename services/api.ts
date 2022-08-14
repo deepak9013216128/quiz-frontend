@@ -5,6 +5,7 @@ export const API = {
 	REGISTER_URL: baseURL + "users/register",
 	PROFILE_URL: baseURL + "users/profile",
 	SEND_INVITE_URL: baseURL + "users/invitation",
+	GET_USERS_URL: baseURL + "users",
 	TOPIC_URL: baseURL + "qns/topics",
 	QNS_URL: baseURL + "qns",
 	QUIZ_URL: baseURL + "quiz",
