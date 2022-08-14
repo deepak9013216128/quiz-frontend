@@ -6,18 +6,20 @@ import Footer from "../../components/footer";
 import Header from "../../components/header";
 import { createTopic, getTopic } from "../../services/topic";
 import Table from "react-bootstrap/Table";
-import { PencilSquare } from "react-bootstrap-icons";
+import { PencilSquare, Plus, PlusSquare } from "react-bootstrap-icons";
 import Link from "next/link";
 import CustomTable from "../../components/custom-table";
 
 const Topic: NextPage = () => {
 	const router = useRouter();
 	const [headers] = useState(["#", "Title", "Description", "Add SubTopic"]);
+	const [showTopicFrom, setShowTopicForm] = useState(false);
 	const [topics, setTopics] = useState([]);
 	const [input, setInput] = useState({
 		title: "",
 		description: "",
 	});
+	const [validated, setValidated] = useState(false);
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setInput((p) => ({ ...p, [e.target.name]: e.target.value }));
@@ -25,9 +27,13 @@ const Topic: NextPage = () => {
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		await createTopic({ ...input });
-		const topics = await getTopic();
-		setTopics(topics ?? []);
+		setValidated(true);
+		if (input.title) {
+			await createTopic({ ...input });
+			const topics = await getTopic();
+			setTopics(topics ?? []);
+			setShowTopicForm(false);
+		}
 	};
 
 	useEffect(() => {
@@ -42,52 +48,86 @@ const Topic: NextPage = () => {
 		<div className="d-flex flex-column min-vh-100">
 			<Header />
 			<Container className="mb-3 mt-3">
-				<Row className="justify-content-md-center">
-					<Col xs md={6} lg={4}>
-						<h1 className="h1 text-center">Create Topic</h1>
-						<Form className="d-grid" onSubmit={handleSubmit}>
-							<Form.Group className="mb-3" controlId="formBasicTitle">
-								<Form.Label>Title</Form.Label>
-								<Form.Control
-									name="title"
-									type="text"
-									placeholder="Enter title"
-									onChange={handleInputChange}
-								/>
-							</Form.Group>
-
-							<Form.Group className="mb-3" controlId="formBasicDescription">
-								<Form.Label>Description</Form.Label>
-								<Form.Control
-									name="description"
-									type="text"
-									placeholder="Enter description"
-									onChange={handleInputChange}
-								/>
-							</Form.Group>
-
-							<Button variant="primary" type="submit">
-								Submit
+				<Row>
+					{!showTopicFrom && (
+						<Col xs={6} sm={8} md={9} lg={8}>
+							<h1 className="h1">Topic</h1>
+						</Col>
+					)}
+					<Col xs={6} sm={4} md={3} lg={2}>
+						{showTopicFrom ? (
+							<Button variant="dark" onClick={() => setShowTopicForm(false)}>
+								Go Back
 							</Button>
-						</Form>
+						) : (
+							<Button onClick={() => setShowTopicForm(true)}>
+								<Plus size={20} /> Create Topic
+							</Button>
+						)}
 					</Col>
 				</Row>
-				<Row className="mt-5 justify-content-md-center">
-					<Col lg={8}>
-						<CustomTable
-							headers={headers}
-							body={topics.map((topic: any, i) => [
-								i + 1,
-								topic.title,
-								topic.description,
-								<Link key={topic._id} href={`/topic/${topic._id}`}>
-									<a>
-										<PencilSquare color="royalblue" />
-									</a>
-								</Link>,
-							])}
-						/>
-					</Col>
+				<Row className="justify-content-md-center">
+					{showTopicFrom && (
+						<Col xs md={6} lg={6}>
+							<h1 className="h1 text-center">Create Topic</h1>
+						</Col>
+					)}
+				</Row>
+				<Row className="justify-content-md-center">
+					{showTopicFrom ? (
+						<Col xs md={6} lg={4}>
+							<Form
+								noValidate
+								validated={validated}
+								className="d-grid"
+								onSubmit={handleSubmit}
+							>
+								<Form.Group className="mb-3" controlId="formBasicTitle">
+									<Form.Label>Title</Form.Label>
+									<Form.Control
+										name="title"
+										type="text"
+										placeholder="Enter title"
+										onChange={handleInputChange}
+										required
+									/>
+									<Form.Control.Feedback type="invalid">
+										Please enter topic title.
+									</Form.Control.Feedback>
+								</Form.Group>
+
+								<Form.Group className="mb-3" controlId="formBasicDescription">
+									<Form.Label>Description</Form.Label>
+									<Form.Control
+										name="description"
+										type="text"
+										placeholder="Enter description"
+										onChange={handleInputChange}
+									/>
+								</Form.Group>
+
+								<Button variant="primary" type="submit">
+									Submit
+								</Button>
+							</Form>
+						</Col>
+					) : (
+						<Col lg={8}>
+							<CustomTable
+								headers={headers}
+								body={topics.map((topic: any, i) => [
+									i + 1,
+									topic.title,
+									topic.description,
+									<Link key={topic._id} href={`/topic/${topic._id}`}>
+										<a>
+											<PencilSquare color="royalblue" />
+										</a>
+									</Link>,
+								])}
+							/>
+						</Col>
+					)}
 				</Row>
 			</Container>
 			<Footer />
