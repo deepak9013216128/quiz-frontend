@@ -16,9 +16,9 @@ export default function CustomTable({ headers, body }: Props) {
 				</tr>
 			</thead>
 			<tbody>
-				{body.map((row, i) => (
+				{body?.map((row, i) => (
 					<tr key={row[0]}>
-						{row.map((col, i) => (
+						{row?.map((col, i) => (
 							<td key={i}>{col}</td>
 						))}
 					</tr>

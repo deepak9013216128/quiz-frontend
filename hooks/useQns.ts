@@ -6,7 +6,6 @@ interface getQnsInterface {
 	subTopic: string;
 }
 export const useQns = (props: getQnsInterface) => {
-	console.log(props);
 	const { data, error } = useSWR(props, (props) => getQns(props), {
 		revalidateIfStale: false,
 		revalidateOnFocus: false,
