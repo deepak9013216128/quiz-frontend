@@ -5,9 +5,14 @@ import { createQns } from "../../services/qns";
 interface qnsFormInterface {
 	topic: string;
 	subTopic: string;
+	hideForm: () => void;
 }
 
-export default function QnsForm({ topic, subTopic }: qnsFormInterface) {
+export default function QnsForm({
+	topic,
+	subTopic,
+	hideForm,
+}: qnsFormInterface) {
 	const [input, setInput] = useState({
 		title: "",
 		description: "",
@@ -41,20 +46,12 @@ export default function QnsForm({ topic, subTopic }: qnsFormInterface) {
 				.fill(0)
 				.map((_, i) => input[`option${i + 1}` as keyof typeof input]),
 		};
-		console.log(body);
 		if (
 			Object.values(body).filter((v) => v).length === 8 &&
 			body.options.filter((o) => o).length === Number(input.noOfOptions)
 		) {
 			const res = await createQns(body);
-			setInput({
-				title: "",
-				description: "",
-				noOfOptions: 2,
-				correctOption: "",
-				points: 1,
-				durationOfQns: 30,
-			});
+			hideForm();
 		}
 	};
 	return (

@@ -45,6 +45,15 @@ const Qns: NextPage = () => {
 		<div className="d-flex flex-column min-vh-100">
 			<Header />
 			<Container className="mb-3 mt-3">
+				{createQns && (
+					<Row>
+						<Col>
+							<Button variant="dark" onClick={() => setCreateQns(false)}>
+								Go Back
+							</Button>
+						</Col>
+					</Row>
+				)}
 				<Row className="justify-content-md-center">
 					<Col xs md={4} lg={6}>
 						<h1 className="h1 ">Qns</h1>
@@ -81,7 +90,15 @@ const Qns: NextPage = () => {
 				<Row className="justify-content-md-center">
 					<Col md={8}>
 						{createQns ? (
-							<QnsForm topic={topic} subTopic={subTopic} />
+							<QnsForm
+								topic={topic}
+								subTopic={subTopic}
+								hideForm={() => {
+									setCreateQns(false);
+									setTopic("");
+									setSubTopic("");
+								}}
+							/>
 						) : (
 							<QnsList topic={topic} subTopic={subTopic} />
 						)}
