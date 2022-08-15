@@ -16,6 +16,8 @@ const Quiz: NextPage = () => {
 		"Title",
 		"Description",
 		"No of qns",
+		"Quiz attempted",
+		"User invited",
 		"Add Qns",
 	]);
 	const quiz = useQuiz();
@@ -44,6 +46,8 @@ const Quiz: NextPage = () => {
 								q?.title,
 								q?.description,
 								q?.noOfQns,
+								q?.quizAttempted,
+								q?.noOfInvitation,
 								<Link key={q._id} href={`/quiz/${q._id}`}>
 									<a>
 										<PencilSquare color="royalblue" />
