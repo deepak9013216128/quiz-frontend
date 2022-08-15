@@ -2,10 +2,12 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { useSWRConfig } from "swr";
 import CustomTable from "../../components/custom-table";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 import { useQuiz, useQuizInvitation } from "../../hooks/useQuiz";
+import { API } from "../../services/api";
 import { sendQuizInvitations } from "../../services/quiz";
 import { sendInvitation } from "../../services/user";
 
@@ -13,6 +15,7 @@ const SendQuizInvitation: NextPage = () => {
 	const router = useRouter();
 	const [headers] = useState(["#", "Name", "Email", "Is attemped"]);
 	const quizInvitation = useQuizInvitation();
+	const { mutate } = useSWRConfig();
 	const quiz = useQuiz();
 	const [validated, setValidated] = useState(false);
 	const [input, setInput] = useState({
@@ -31,6 +34,8 @@ const SendQuizInvitation: NextPage = () => {
 			const invitationToken = await sendQuizInvitations({
 				...input,
 			});
+			mutate(API.QUIZ_INVITATION_URL);
+			setInput((p) => ({ ...p, email: "" }));
 		}
 	};
 	return (

@@ -1,9 +1,11 @@
 import useSWR from "swr";
+import { API } from "../services/api";
 import { getQnsFromQuiz, getQuiz, getQuizInvitations } from "../services/quiz";
 
 export const useQuiz = () => {
-	const { data, error } = useSWR("get quiz", getQuiz, {
-		revalidateIfStale: false,
+	const { data, error } = useSWR(API.QUIZ_URL, getQuiz, {
+		// revalidateIfStale: false,
+		refreshInterval: 0,
 		revalidateOnFocus: false,
 		revalidateOnReconnect: false,
 	});
@@ -12,7 +14,8 @@ export const useQuiz = () => {
 };
 export const useQnsFromQuiz = (quizId: string) => {
 	const { data, error } = useSWR(quizId, (quizId) => getQnsFromQuiz(quizId), {
-		revalidateIfStale: false,
+		// revalidateIfStale: false,
+		refreshInterval: 0,
 		revalidateOnFocus: false,
 		revalidateOnReconnect: false,
 	});
@@ -21,8 +24,9 @@ export const useQnsFromQuiz = (quizId: string) => {
 };
 
 export const useQuizInvitation = () => {
-	const { data, error } = useSWR("quiz invitation", getQuizInvitations, {
-		revalidateIfStale: false,
+	const { data, error } = useSWR(API.QUIZ_INVITATION_URL, getQuizInvitations, {
+		// revalidateIfStale: false,
+		refreshInterval: 0,
 		revalidateOnFocus: false,
 		revalidateOnReconnect: false,
 	});

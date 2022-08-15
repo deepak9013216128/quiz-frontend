@@ -4,23 +4,33 @@ import { PencilSquare } from "react-bootstrap-icons";
 const Qns = ({ qns, addQnsInQuiz }: any) => {
 	return (
 		<Card>
-			<Card.Header>
-				<Badge className="m-1" bg="dark">
-					{qns?.topic?.title}
-				</Badge>
-				<Badge className="m-1" bg="dark">
-					{qns?.subTopic?.title}
-				</Badge>
-				<Badge
-					className="m-1 text-capitalize"
-					bg={qns?.status === "active" ? "primary" : "danger"}
-				>
-					{qns?.status}
-				</Badge>
-				<Badge
-					className="m-1 text-capitalize"
-					bg="info"
-				>{`points ${qns?.points}`}</Badge>
+			<Card.Header className="d-flex justify-content-between">
+				<div>
+					<Badge className="m-1" bg="dark">
+						{qns?.topic?.title}
+					</Badge>
+					<Badge className="m-1" bg="dark">
+						{qns?.subTopic?.title}
+					</Badge>
+				</div>
+				<div>
+					{qns?.qnsUsed ? (
+						<Badge
+							className="m-1 text-capitalize"
+							bg="secondary"
+						>{`Qns used ${qns?.qnsUsed}`}</Badge>
+					) : null}
+					<Badge
+						className="m-1 text-capitalize"
+						bg={qns?.status === "active" ? "primary" : "danger"}
+					>
+						{qns?.status}
+					</Badge>
+					<Badge
+						className="m-1 text-capitalize"
+						bg="info"
+					>{`points ${qns?.points}`}</Badge>
+				</div>
 			</Card.Header>
 			<Card.Body>
 				<Card.Title>{qns?.title}</Card.Title>
