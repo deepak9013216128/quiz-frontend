@@ -99,3 +99,20 @@ export const sendQuizInvitations = async (body: sqiInterface) => {
 		console.log(err);
 	}
 };
+
+export const updateQnsResponse = async ({ quizId, qnsId, ...body }: any) => {
+	try {
+		const response: any = await FETCH({
+			url: API.QUIZ_URL + `/${quizId}/${qnsId}`,
+			method: "POST",
+			body: {
+				...body,
+			},
+		});
+		if (!response?.status) {
+			throw new Error(response.message);
+		}
+	} catch (err) {
+		console.log(err);
+	}
+};

@@ -20,8 +20,18 @@ const Login: NextPage = () => {
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		await login({ email: input.email, password: input.password });
-		router.push("/dashboard");
+		const role = await login({ email: input.email, password: input.password });
+		switch (role) {
+			case "student":
+				router.push("/user/dashboard");
+				break;
+			case "instructor":
+			case "admin":
+				router.push("/dashboard");
+				break;
+			default:
+				break;
+		}
 	};
 
 	return (
