@@ -53,7 +53,7 @@ export default function Header() {
 								</Nav.Item>
 								<Nav.Item>
 									<Nav.Link eventKey="/send-quiz-invitation">
-										Send Invitation
+										Send Quiz Invitation
 									</Nav.Link>
 								</Nav.Item>
 							</>
