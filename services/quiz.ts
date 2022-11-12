@@ -116,3 +116,17 @@ export const updateQnsResponse = async ({ quizId, qnsId, ...body }: any) => {
 		console.log(err);
 	}
 };
+
+export const submitQuiz = async (quizId: string) => {
+	try {
+		const response: any = await FETCH({
+			url: API.STUDENT_QUIZ_URL + `/${quizId}/`,
+			method: "POST",
+		});
+		if (!response?.status) {
+			throw new Error(response.message);
+		}
+	} catch (err) {
+		console.log(err);
+	}
+};

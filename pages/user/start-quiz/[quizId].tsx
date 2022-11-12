@@ -7,7 +7,7 @@ import Countdown from "../../../components/countdown";
 import Footer from "../../../components/footer";
 import Header from "../../../components/header";
 import { useQnsFromQuiz, useQuiz } from "../../../hooks/useQuiz";
-import { updateQnsResponse } from "../../../services/quiz";
+import { updateQnsResponse, submitQuiz } from "../../../services/quiz";
 
 const QuizTest: NextPage = () => {
 	const router = useRouter();
@@ -39,19 +39,25 @@ const QuizTest: NextPage = () => {
 	}, [quizQns]);
 
 	useEffect(() => {
-		if (qnsNo && qnsNo >= quizQns.length) {
-			//=======================================================================
+		if (qnsNo && quizQns && qnsNo >= quizQns.length) {
+			//=============================== SUBMIT QUIZ ======================================
+			submitQuiz(router.query.quizId as string);
 		}
 	}, [qnsNo]);
 
 	if (!quizQns) return <div></div>;
-	if (qnsNo && qnsNo >= quizQns.length) {
+	if (qnsNo && qnsNo > quizQns.length) {
 		return (
 			<div className="d-flex  flex-column min-vh-100">
 				<Container className="mb-3 mt-3 text-center">
 					<h1 className="display-2 m-5">Thank You for participation!</h1>
 					<h2 className="h3 m-3">Click below buttion to see your score here</h2>
-					<button className="btn btn-success px-5">See Score</button>
+					<button
+						className="btn btn-success px-5"
+						onClick={() => router.push("/user/performace")}
+					>
+						See Score
+					</button>
 				</Container>
 			</div>
 		);

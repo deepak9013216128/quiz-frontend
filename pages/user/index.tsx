@@ -7,7 +7,18 @@ import { useEffect } from "react";
 const User: NextPage = () => {
 	const router = useRouter();
 	useEffect(() => {
-		router.push("/user/dashboard");
+		switch (localStorage.getItem("role")) {
+			case "admin":
+			case "instructor":
+				router.push("/dashboard");
+				break;
+			case "student":
+				router.push("/user/dashboard");
+				break;
+			default:
+				router.push("/login");
+				break;
+		}
 	}, []);
 	return <div></div>;
 };
