@@ -14,8 +14,10 @@ const QuizTest: NextPage = () => {
 	const [qnsNo, setQnsNo] = useState(1);
 	const quizQns = useQnsFromQuiz(router.query.quizId as string);
 	const [ans, setAns] = useState<any>([]);
+	const [shouldDisplayNextBtn, setShouldDisplayNextBtn] = useState(false);
 
 	const updateAns = (ans: number) => {
+		setShouldDisplayNextBtn(true);
 		setAns((p: any) => [
 			...p.map((_: any, i: number) => (qnsNo - 1 === i ? ans : _)),
 		]);
@@ -29,15 +31,33 @@ const QuizTest: NextPage = () => {
 
 	const nextQns = () => {
 		setQnsNo((p) => p + 1);
+		setShouldDisplayNextBtn(false);
 	};
 
 	useEffect(() => {
 		setAns(new Array(quizQns?.length).fill(-1));
 	}, [quizQns]);
 
+	useEffect(() => {
+		if (qnsNo && qnsNo >= quizQns.length) {
+			//=======================================================================
+		}
+	}, [qnsNo]);
+
 	if (!quizQns) return <div></div>;
+	if (qnsNo && qnsNo >= quizQns.length) {
+		return (
+			<div className="d-flex  flex-column min-vh-100">
+				<Container className="mb-3 mt-3 text-center">
+					<h1 className="display-2 m-5">Thank You for participation!</h1>
+					<h2 className="h3 m-3">Click below buttion to see your score here</h2>
+					<button className="btn btn-success px-5">See Score</button>
+				</Container>
+			</div>
+		);
+	}
 	return (
-		<div className="d-flex bg-gradient-primary flex-column min-vh-100">
+		<div className="d-flex  flex-column min-vh-100">
 			<Container className="mb-3 mt-3">
 				<div className="d-flex justify-content-between align-items-center">
 					<h3 className="h3">
@@ -77,7 +97,11 @@ const QuizTest: NextPage = () => {
 				</Row>
 				<Row>
 					<Col xs={12} className="d-flex justify-content-center">
-						<Button className="bg-success" onClick={nextQns}>
+						<Button
+							className="bg-success"
+							onClick={nextQns}
+							disabled={!shouldDisplayNextBtn}
+						>
 							Next
 						</Button>
 					</Col>

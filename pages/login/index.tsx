@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
@@ -17,10 +17,7 @@ const Login: NextPage = () => {
 		setInput((p) => ({ ...p, [e.target.name]: e.target.value }));
 	};
 
-	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-
-		const role = await login({ email: input.email, password: input.password });
+	const goToDashboard = (role: string) => {
 		switch (role) {
 			case "student":
 				router.push("/user/dashboard");
@@ -33,6 +30,16 @@ const Login: NextPage = () => {
 				break;
 		}
 	};
+
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const role = await login({ email: input.email, password: input.password });
+		goToDashboard(role);
+	};
+
+	useEffect(() => {
+		goToDashboard(localStorage.getItem("role") as string);
+	}, []);
 
 	return (
 		<div className="d-flex flex-column min-vh-100">

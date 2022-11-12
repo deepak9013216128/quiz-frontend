@@ -8,7 +8,18 @@ import styles from "../styles/Home.module.css";
 const Home: NextPage = () => {
 	const router = useRouter();
 	useEffect(() => {
-		router.push("/login");
+		switch (localStorage.getItem("role")) {
+			case "admin":
+			case "instructor":
+				router.push("/dashboard");
+				break;
+			case "student":
+				router.push("/user/dashboard");
+				break;
+			default:
+				router.push("/login");
+				break;
+		}
 	}, []);
 	return <div className={styles.container}></div>;
 };
