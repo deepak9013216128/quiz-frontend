@@ -10,7 +10,7 @@ export default function Header() {
 	}, []);
 
 	return (
-		<Navbar bg="dark" variant="dark">
+		<Navbar bg="info" variant="light">
 			<Container>
 				<Navbar.Brand href="/">
 					<Image
@@ -18,7 +18,7 @@ export default function Header() {
 						alt="logo"
 						width="30"
 						height="30"
-						className="d-inline-block align-top"
+						className="d-inline-block align-top text-light"
 					/>{" "}
 					Home
 				</Navbar.Brand>
@@ -35,7 +35,7 @@ export default function Header() {
 								<Nav.Link eventKey="/history">History</Nav.Link>
 							</Nav.Item>
 							<Nav.Item>
-								<Nav.Link eventKey="/performance">Performance</Nav.Link>
+								<Nav.Link eventKey="/user/result">Performance</Nav.Link>
 							</Nav.Item>
 						</>
 					)}
