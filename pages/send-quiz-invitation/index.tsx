@@ -1,7 +1,9 @@
 import { NextPage } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { BoxArrowUpRight } from "react-bootstrap-icons";
 import { useSWRConfig } from "swr";
 import CustomTable from "../../components/custom-table";
 import Footer from "../../components/footer";
@@ -13,7 +15,7 @@ import { sendInvitation } from "../../services/user";
 
 const SendQuizInvitation: NextPage = () => {
 	const router = useRouter();
-	const [headers] = useState(["#", "Name", "Email", "Is attemped"]);
+	const [headers] = useState(["#", "Name", "Email", "Quiz", "Is attemped"]);
 	const quizInvitation = useQuizInvitation();
 	const { mutate } = useSWRConfig();
 	const quiz = useQuiz();
@@ -105,7 +107,19 @@ const SendQuizInvitation: NextPage = () => {
 								i + 1,
 								q?.invitedTo?.name,
 								q?.invitedTo?.email,
+								q?.quiz?.title,
 								q?.isAttempted ? "Yes" : "No",
+								q?.isAttempted ? (
+									<Link
+										href={`/result?quizId=${q?.quiz?._id}&userId=${q?.invitedTo?._id}`}
+									>
+										<a target="_blank">
+											<BoxArrowUpRight color="royalblue" />
+										</a>
+									</Link>
+								) : (
+									<BoxArrowUpRight color="gray" />
+								),
 							])}
 						/>
 					</Col>

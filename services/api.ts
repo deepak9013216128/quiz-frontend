@@ -12,6 +12,7 @@ export const API = {
 	QUIZ_INVITATION_URL: baseURL + "quiz/invitation",
 	STUDENT_QUIZ_URL: baseURL + "student/quiz",
 	STUDENT_QUIZ_RESULT_URL: baseURL + "student/results",
+	RESULT_URL: baseURL + "results",
 };
 
 interface ApiInterface {

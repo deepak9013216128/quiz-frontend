@@ -29,3 +29,18 @@ export const getStudentQuizResults = async (quizId: string) => {
 		return [];
 	}
 };
+
+export const getUserQuizResult = async (quizId: string, userId: string) => {
+	try {
+		const response: any = await FETCH({
+			url: API.RESULT_URL + "/" + quizId + "/" + userId,
+		});
+		if (!response?.status) {
+			throw new Error(response.message);
+		}
+		return response?.result;
+	} catch (err) {
+		console.log(err);
+		return [];
+	}
+};
