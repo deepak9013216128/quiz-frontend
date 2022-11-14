@@ -16,6 +16,7 @@ const UserResult: NextPage = () => {
 		router.query.quizId as string,
 		router.query.userId as string
 	);
+	if (!result) return null;
 
 	return (
 		<Row className="mt-3 justify-content-md-center">
