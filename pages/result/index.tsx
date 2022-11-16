@@ -6,6 +6,7 @@ import { useSWRConfig } from "swr";
 import CustomTable from "../../components/custom-table";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
+import QuizsResult from "../../components/result/quiz";
 import UserResult from "../../components/result/user";
 import { useQuiz, useQuizInvitation } from "../../hooks/useQuiz";
 import { API } from "../../services/api";
@@ -17,6 +18,8 @@ const Results: NextPage = () => {
 	let children = null;
 	if (router.query.userId && router.query.quizId) {
 		children = <UserResult />;
+	} else if (router.query.quizId) {
+		children = <QuizsResult />;
 	}
 
 	return (

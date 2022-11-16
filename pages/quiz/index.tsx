@@ -43,7 +43,9 @@ const Quiz: NextPage = () => {
 							headers={headers}
 							body={quiz?.map((q: any, i: number) => [
 								i + 1,
-								q?.title,
+								<Link key={i} href={"/result?quizId=" + q?._id}>
+									<a target="_blank">{q?.title}</a>
+								</Link>,
 								q?.description,
 								q?.noOfQns,
 								q?.quizAttempted,

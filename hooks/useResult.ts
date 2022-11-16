@@ -4,6 +4,7 @@ import {
 	getStudentQuizResults,
 	getStudentResults,
 	getUserQuizResult,
+	getQuizResults,
 } from "../services/result";
 
 export const useStudentResults = () => {
@@ -46,6 +47,17 @@ export const useUserQuizResult = (quizId: string, userId: string) => {
 			revalidateOnReconnect: false,
 		}
 	);
+
+	return data;
+};
+
+export const useQuizResults = (quizId: string) => {
+	const { data, error } = useSWR(quizId, (quizId) => getQuizResults(quizId), {
+		// revalidateIfStale: false,
+		refreshInterval: 0,
+		revalidateOnFocus: false,
+		revalidateOnReconnect: false,
+	});
 
 	return data;
 };
