@@ -48,7 +48,22 @@ export const getUserQuizResult = async (quizId: string, userId: string) => {
 export const getQuizResults = async (quizId: string) => {
 	try {
 		const response: any = await FETCH({
-			url: API.RESULT_URL + "/" + quizId,
+			url: API.RESULT_URL + "/quiz/" + quizId,
+		});
+		if (!response?.status) {
+			throw new Error(response.message);
+		}
+		return response?.results;
+	} catch (err) {
+		console.log(err);
+		return [];
+	}
+};
+
+export const getUsersResults = async () => {
+	try {
+		const response: any = await FETCH({
+			url: API.RESULT_URL,
 		});
 		if (!response?.status) {
 			throw new Error(response.message);

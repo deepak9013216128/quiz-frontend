@@ -6,8 +6,10 @@ import { useSWRConfig } from "swr";
 import CustomTable from "../../components/custom-table";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
-import QuizsResult from "../../components/result/quiz";
-import UserResult from "../../components/result/user";
+import QuizsResult from "../../components/result/quizResult";
+import UserResult from "../../components/result/userResult";
+import UserResults from "../../components/result/userResults";
+import UsersList from "../../components/result/usersList";
 import { useQuiz, useQuizInvitation } from "../../hooks/useQuiz";
 import { API } from "../../services/api";
 import { sendQuizInvitations } from "../../services/quiz";
@@ -20,6 +22,10 @@ const Results: NextPage = () => {
 		children = <UserResult />;
 	} else if (router.query.quizId) {
 		children = <QuizsResult />;
+	} else if (router.query.userId) {
+		children = <UserResults />;
+	} else {
+		children = <UsersList />;
 	}
 
 	return (
