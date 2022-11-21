@@ -31,14 +31,7 @@ const Results: NextPage = () => {
 	return (
 		<div className="d-flex flex-column min-vh-100">
 			<Header />
-			<Container className="mb-3 mt-3">
-				<Row className="justify-content-md-center">
-					<Col xs md={6} lg={6}>
-						<h1 className="h1 text-center">Results</h1>
-					</Col>
-				</Row>
-				{children}
-			</Container>
+			<Container className="mb-3 mt-3">{children}</Container>
 			<Footer />
 		</div>
 	);

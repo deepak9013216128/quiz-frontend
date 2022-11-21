@@ -19,12 +19,15 @@ export default function QuizCard({ q }: any) {
 			}`}
 		>
 			<Row>
-				<Col xs={12} lg={q?.successfullAttempted ? 6 : 8}>
+				<Col
+					xs={12}
+					lg={q?.isAttempted && q?.successfullAttempted >= 0 ? 6 : 8}
+				>
 					<h3 className="h3">{q?.quiz?.title}</h3>
 					<h4 className="h4">{q?.quiz?.description}</h4>
 					<p className="p">Invited by: {q?.invitedBy?.name}</p>
 				</Col>
-				{q?.successfullAttempted && (
+				{q?.isAttempted && q?.successfullAttempted >= 0 && (
 					<Col xs={6} lg={2}>
 						<h6 className="h6 text-md-center">Score</h6>
 

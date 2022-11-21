@@ -2,55 +2,51 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import { BoxArrowUpRight } from "react-bootstrap-icons";
 import { useSWRConfig } from "swr";
 import CustomTable from "../custom-table";
-import { useUserQuizResult } from "../../hooks/useResult";
+import { useUserResults } from "../../hooks/useResult";
 
 const UserResults: NextPage = () => {
 	const router = useRouter();
-	const headers = ["S. No.", "Qns", "Options", "Your Ans", "Points"];
-	const { mutate } = useSWRConfig();
-	const result = useUserQuizResult(
-		router.query.quizId as string,
-		router.query.userId as string
-	);
-	if (!result) return null;
+	const headers = [
+		"S. No.",
+		"Quiz",
+		"isAttempted",
+		"No of Qns Attempted",
+		"Successfull Attempted",
+	];
+	const results = useUserResults(router.query.userId as string);
+	if (!results) return null;
 
 	return (
 		<Row className="mt-3 justify-content-md-center">
-			<Col lg={12}>
-				<h3 className="h3">
-					{result[0]?.user?.name} has Score{" "}
-					<span className="text-primary">
-						{result?.filter((r: any) => r.points > 0).length}
-					</span>
-				</h3>
+			<Col xs={12}>
+				<Button variant="dark" onClick={() => router.push("/result")}>
+					Go Back
+				</Button>
 			</Col>
+			<Col xs md={6} lg={6} className="justify-content-md-center">
+				<h1 className="h1 text-center">Results</h1>
+			</Col>
+
 			<CustomTable
 				headers={headers}
-				body={result?.map((r: any, i: number) => [
+				body={results?.map((r: any, i: number) => [
 					i + 1,
-					r?.qns?.title,
-					<>
-						{r?.qns?.options?.map((o: any, i: number) => (
-							<p
-								className={
-									i + 1 === r?.ans
-										? r?.points > 0
-											? "p-1 text-light bg-success rounded-2"
-											: "p-1 text-light bg-danger rounded-2"
-										: ""
-								}
-								key={i}
-							>
-								{o}
-							</p>
-						))}
-					</>,
-					r?.ans,
-					r?.points,
+					r?.isAttempted ? (
+						<Link
+							href={`/result?quizId=${r?.quiz?._id}&userId=${router.query.userId}`}
+						>
+							<a target="_blank">{r?.quiz?.title}</a>
+						</Link>
+					) : (
+						<>{r?.quiz?.title}</>
+					),
+					r?.isAttempted ? "Submitted" : "Pending",
+					r?.noOfQns,
+					r?.successfullAttempted,
 				])}
 			/>
 		</Row>

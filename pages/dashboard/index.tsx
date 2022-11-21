@@ -5,6 +5,7 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import CustomTable from "../../components/custom-table";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
+import UsersList from "../../components/result/usersList";
 import { useQuiz, useQuizInvitation } from "../../hooks/useQuiz";
 import { sendQuizInvitations } from "../../services/quiz";
 import { sendInvitation } from "../../services/user";
@@ -21,6 +22,7 @@ const Dashboard: NextPage = () => {
 						<h1 className="h1 text-center">Dashboard</h1>
 					</Col>
 				</Row>
+				<UsersList />
 			</Container>
 			<Footer />
 		</div>

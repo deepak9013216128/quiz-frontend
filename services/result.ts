@@ -74,3 +74,18 @@ export const getUsersResults = async () => {
 		return [];
 	}
 };
+
+export const getUserResults = async (userId: string) => {
+	try {
+		const response: any = await FETCH({
+			url: API.RESULT_URL + "/user/" + userId,
+		});
+		if (!response?.status) {
+			throw new Error(response.message);
+		}
+		return response?.results;
+	} catch (err) {
+		console.log(err);
+		return [];
+	}
+};

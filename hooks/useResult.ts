@@ -6,6 +6,7 @@ import {
 	getUserQuizResult,
 	getQuizResults,
 	getUsersResults,
+	getUserResults,
 } from "../services/result";
 
 export const useStudentResults = () => {
@@ -65,6 +66,17 @@ export const useQuizResults = (quizId: string) => {
 
 export const useUsersResults = () => {
 	const { data, error } = useSWR("users result list", getUsersResults, {
+		// revalidateIfStale: false,
+		refreshInterval: 0,
+		revalidateOnFocus: false,
+		revalidateOnReconnect: false,
+	});
+
+	return data;
+};
+
+export const useUserResults = (userId: string) => {
+	const { data, error } = useSWR(userId, (userId) => getUserResults(userId), {
 		// revalidateIfStale: false,
 		refreshInterval: 0,
 		revalidateOnFocus: false,

@@ -43,6 +43,9 @@ export default function Header() {
 						(role === "admin" && (
 							<>
 								<Nav.Item>
+									<Nav.Link eventKey="/result">Result</Nav.Link>
+								</Nav.Item>
+								<Nav.Item>
 									<Nav.Link eventKey="/quiz">Quiz</Nav.Link>
 								</Nav.Item>
 								<Nav.Item>

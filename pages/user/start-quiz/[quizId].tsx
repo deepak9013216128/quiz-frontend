@@ -54,7 +54,7 @@ const QuizTest: NextPage = () => {
 					<h2 className="h3 m-3">Click below buttion to see your score here</h2>
 					<button
 						className="btn btn-success px-5"
-						onClick={() => router.push("/user/performace")}
+						onClick={() => router.push("/user/result")}
 					>
 						See Score
 					</button>
