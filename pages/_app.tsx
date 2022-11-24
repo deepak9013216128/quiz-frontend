@@ -3,11 +3,14 @@ import type { AppProps } from "next/app";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AuthProvider } from "../context/auth-context";
+import DialogProvider from "../components/dialog";
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<AuthProvider>
-			<Component {...pageProps} />
+			<DialogProvider>
+				<Component {...pageProps} />
+			</DialogProvider>
 		</AuthProvider>
 	);
 }

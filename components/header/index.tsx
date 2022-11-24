@@ -39,28 +39,27 @@ export default function Header() {
 							</Nav.Item>
 						</>
 					)}
-					{role === "instructor" ||
-						(role === "admin" && (
-							<>
-								<Nav.Item>
-									<Nav.Link eventKey="/result">Result</Nav.Link>
-								</Nav.Item>
-								<Nav.Item>
-									<Nav.Link eventKey="/quiz">Quiz</Nav.Link>
-								</Nav.Item>
-								<Nav.Item>
-									<Nav.Link eventKey="/qns">Qns</Nav.Link>
-								</Nav.Item>
-								<Nav.Item>
-									<Nav.Link eventKey="/topic">Topic</Nav.Link>
-								</Nav.Item>
-								<Nav.Item>
-									<Nav.Link eventKey="/send-quiz-invitation">
-										Send Quiz Invitation
-									</Nav.Link>
-								</Nav.Item>
-							</>
-						))}
+					{(role === "instructor" || role === "admin") && (
+						<>
+							<Nav.Item>
+								<Nav.Link eventKey="/result">Result</Nav.Link>
+							</Nav.Item>
+							<Nav.Item>
+								<Nav.Link eventKey="/quiz">Quiz</Nav.Link>
+							</Nav.Item>
+							<Nav.Item>
+								<Nav.Link eventKey="/qns">Qns</Nav.Link>
+							</Nav.Item>
+							<Nav.Item>
+								<Nav.Link eventKey="/topic">Topic</Nav.Link>
+							</Nav.Item>
+							<Nav.Item>
+								<Nav.Link eventKey="/send-quiz-invitation">
+									Send Quiz Invitation
+								</Nav.Link>
+							</Nav.Item>
+						</>
+					)}
 					{role === "admin" && (
 						<>
 							<Nav.Item>

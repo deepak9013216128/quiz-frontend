@@ -79,3 +79,37 @@ export const getUsers = async () => {
 		return [];
 	}
 };
+
+export const changeUserStatus = async (userId: string, status: string) => {
+	try {
+		const response: any = await FETCH({
+			url: API.GET_USERS_URL + "/status",
+			method: "PUT",
+			body: { userId, status },
+		});
+		if (!response?.status) {
+			throw new Error(response?.error);
+		}
+		return response?.user;
+	} catch (err) {
+		console.log(err);
+		return [];
+	}
+};
+
+export const changeUserRole = async (userId: string, role: string) => {
+	try {
+		const response: any = await FETCH({
+			url: API.GET_USERS_URL + "/role",
+			method: "PUT",
+			body: { userId, role },
+		});
+		if (!response?.status) {
+			throw new Error(response?.error);
+		}
+		return response?.user;
+	} catch (err) {
+		console.log(err);
+		return [];
+	}
+};
