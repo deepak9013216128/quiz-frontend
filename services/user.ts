@@ -27,7 +27,7 @@ export const login = async ({ email, password }: loginInterface) => {
 			body: { email, password },
 		});
 		saveUser(response);
-		return response?.role;
+		return response;
 	} catch (err) {
 		console.log(err);
 		return undefined;

@@ -10,9 +10,12 @@ import CustomTable from "../../components/custom-table";
 import { useUsers } from "../../hooks/useUser";
 import { DialogContext } from "../../components/dialog";
 import { changeUserStatus, changeUserRole } from "../../services/user";
+import { useToasts } from "../../components/toast";
+import { useLoader } from "../../components/loader";
 
 const Popup = ({ user, hideDialog, type = "Status" }: any) => {
 	const { mutate } = useSWRConfig();
+	const { showLoader, hideLoader } = useLoader();
 	const [input, setInput] = useState({
 		status: user?.status ?? "",
 		role: user?.role ?? "",
@@ -53,10 +56,12 @@ const Popup = ({ user, hideDialog, type = "Status" }: any) => {
 					variant="primary"
 					type="submit"
 					onClick={async () => {
+						hideDialog();
+						showLoader();
 						type === "Status"
 							? await changeUserStatus(user?._id, input.status)
 							: await changeUserRole(user?._id, input.role);
-						hideDialog();
+						hideLoader();
 						mutate("users");
 					}}
 				>

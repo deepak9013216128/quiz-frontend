@@ -4,10 +4,12 @@ import { ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
+import { useToasts } from "../../components/toast";
 import { login } from "../../services/user";
 
 const Login: NextPage = () => {
 	const router = useRouter();
+	const { showToast } = useToasts();
 	const [input, setInput] = useState({
 		email: "",
 		password: "",
@@ -33,8 +35,12 @@ const Login: NextPage = () => {
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const role = await login({ email: input.email, password: input.password });
-		goToDashboard(role);
+		const res = await login({ email: input.email, password: input.password });
+		if (res?.message) {
+			return showToast("danger", res?.message);
+		}
+		showToast("success", "Login Successful");
+		goToDashboard(res?.role);
 	};
 
 	useEffect(() => {
