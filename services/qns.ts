@@ -2,7 +2,7 @@ import { API, FETCH } from "./api";
 
 interface qnsInterface {
 	title: string;
-	description: string;
+	description?: string;
 }
 
 export const createQns = async (qns: qnsInterface) => {
@@ -15,6 +15,7 @@ export const createQns = async (qns: qnsInterface) => {
 		if (!response.status) {
 			throw new Error(response.message);
 		}
+		return response;
 	} catch (err) {
 		console.log(err);
 	}

@@ -12,9 +12,11 @@ import QnsForm from "../../components/qns-form";
 import { Plus } from "react-bootstrap-icons";
 import QnsList from "../../components/qns-list";
 import { useQns } from "../../hooks/useQns";
+import { useSWRConfig } from "swr";
 
 const Qns: NextPage = () => {
 	const router = useRouter();
+	const { mutate } = useSWRConfig();
 	const [topics, setTopics] = useState<any>([]);
 	const [subTopics, setSubTopics] = useState<any>([]);
 	const [topic, setTopic] = useState("");
@@ -95,8 +97,8 @@ const Qns: NextPage = () => {
 								subTopic={subTopic}
 								hideForm={() => {
 									setCreateQns(false);
-									setTopic("");
-									setSubTopic("");
+									// setTopic("");
+									// setSubTopic("");
 								}}
 							/>
 						) : (

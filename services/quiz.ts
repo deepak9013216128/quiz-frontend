@@ -42,9 +42,26 @@ export const addQnsInQuiz = async (quizId: string, qnsId: string) => {
 			method: "POST",
 			body: { qnsId },
 		});
-		if (!response.status) {
-			throw new Error(response.message);
-		}
+		// if (!response.status) {
+		// 	throw new Error(response.message);
+		// }
+		return response;
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+export const removeQnsInQuiz = async (quizId: string, qnsId: string) => {
+	try {
+		const response: any = await FETCH({
+			url: API.QUIZ_URL + "/" + quizId,
+			method: "DELETE",
+			body: { qnsId },
+		});
+		// if (!response.status) {
+		// 	throw new Error(response.message);
+		// }
+		return response;
 	} catch (err) {
 		console.log(err);
 	}

@@ -1,6 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { createQns } from "../../services/qns";
+import { useLoader } from "../loader";
+import { useToasts } from "../toast";
 
 interface qnsFormInterface {
 	topic: string;
@@ -13,6 +15,8 @@ export default function QnsForm({
 	subTopic,
 	hideForm,
 }: qnsFormInterface) {
+	const { showLoader, hideLoader } = useLoader();
+	const { showToast } = useToasts();
 	const [input, setInput] = useState({
 		title: "",
 		description: "",
@@ -36,7 +40,7 @@ export default function QnsForm({
 
 		const body = {
 			title: input.title,
-			description: input.description,
+			// description: input.description,
 			topic: topic,
 			subTopic: subTopic,
 			correctChoice: Number(input.correctOption),
@@ -47,10 +51,14 @@ export default function QnsForm({
 				.map((_, i) => input[`option${i + 1}` as keyof typeof input]),
 		};
 		if (
-			Object.values(body).filter((v) => v).length === 8 &&
+			Object.values(body).filter((v) => v).length === 7 &&
 			body.options.filter((o) => o).length === Number(input.noOfOptions)
 		) {
+			showLoader();
 			const res = await createQns(body);
+			hideLoader();
+			if (!res?.status) showToast("danger", res?.message);
+			else showToast("success", "Qns created!");
 			hideForm();
 		}
 	};
@@ -83,7 +91,6 @@ export default function QnsForm({
 					rows={3}
 					placeholder="Enter description"
 					onChange={handleInputChange}
-					required
 				/>
 				<Form.Control.Feedback type="invalid">
 					Please enter subtitle of question.

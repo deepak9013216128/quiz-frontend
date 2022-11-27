@@ -16,7 +16,6 @@ const ToastContainer = (props: any) => (
 
 const ToastMessage = ({ type, msg, onHide }: any) => {
 	const [show, setShow] = React.useState(true);
-	console.log(type, msg, onHide);
 	if (show) {
 		return (
 			<Alert
@@ -24,7 +23,6 @@ const ToastMessage = ({ type, msg, onHide }: any) => {
 				variant={type}
 				onClose={() => {
 					setShow(false);
-					console.log("clicked");
 					onHide();
 				}}
 				dismissible
@@ -48,11 +46,9 @@ export default function ToastProvider({ children }: any) {
 		return id;
 	};
 	const hideToast = (id: string) => {
-		console.log(id, toasts);
 		const newToasts = toasts.filter((t: any) => t.id !== id);
 		setToasts(newToasts);
 	};
-	console.log(toasts);
 	// avoid creating a new fn on every render
 	const onHide = (id: string) => () => hideToast(id);
 

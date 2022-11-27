@@ -14,9 +14,11 @@ import Table from "react-bootstrap/Table";
 import { PencilSquare, Plus } from "react-bootstrap-icons";
 import Link from "next/link";
 import CustomTable from "../../components/custom-table";
+import { useLoader } from "../../components/loader";
 
 const SubTopic: NextPage = () => {
 	const router = useRouter();
+	const { showLoader, hideLoader } = useLoader();
 	const [headers] = useState(["#", "Title", "Description", "Topic"]);
 	const [topicId, setTopicId] = useState("");
 	const [subTopics, setSubTopics] = useState([]);
@@ -35,8 +37,10 @@ const SubTopic: NextPage = () => {
 		e.preventDefault();
 		setValidated(true);
 		if (input.title) {
+			showLoader();
 			await createSubTopic({ ...input, topicId });
-			fetchSubTopics();
+			hideLoader();
+			await fetchSubTopics();
 			setShowSubTopicForm(false);
 		}
 	};

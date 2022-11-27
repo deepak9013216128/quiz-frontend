@@ -5,15 +5,31 @@ import { Container, Row, Col, Form, Button, Badge } from "react-bootstrap";
 import Footer from "../../../components/footer";
 import Header from "../../../components/header";
 import CustomTable from "../../../components/custom-table";
-import { PencilSquare, Plus } from "react-bootstrap-icons";
+import { PencilSquare, Plus, Trash } from "react-bootstrap-icons";
 import { useQuiz } from "../../../hooks/useQuiz";
 import Link from "next/link";
 import { useQnsFromQuiz } from "../../../hooks/useQuiz";
+import { removeQnsInQuiz } from "../../../services/quiz";
+import { useSWRConfig } from "swr";
+import { useLoader } from "../../../components/loader";
+import { useToasts } from "../../../components/toast";
 
 const Quiz: NextPage = () => {
 	const router = useRouter();
+	const { showLoader, hideLoader } = useLoader();
+	const { showToast } = useToasts();
+	const { mutate } = useSWRConfig();
 	const [headers] = useState(["#", "Title", "Description", "Points", "Time"]);
 	const quizQns = useQnsFromQuiz(router.query.quizId as string);
+
+	const removeQns = async (id: string) => {
+		showLoader();
+		const res = await removeQnsInQuiz(router.query.quizId as string, id);
+		await mutate(router.query.quizId as string);
+		hideLoader();
+		if (res?.status) showToast("success", res?.message);
+		else showToast("danger", res?.message);
+	};
 
 	return (
 		<div className="d-flex flex-column min-vh-100">
@@ -49,6 +65,11 @@ const Quiz: NextPage = () => {
 								q?.qns?.description,
 								q?.qns?.points,
 								q?.qns?.durationOfQns + "Sec",
+								<Trash
+									key={i}
+									style={{ cursor: "pointer" }}
+									onClick={() => removeQns(q?.qns?._id)}
+								/>,
 							])}
 						/>
 					</Col>

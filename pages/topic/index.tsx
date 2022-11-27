@@ -9,9 +9,11 @@ import Table from "react-bootstrap/Table";
 import { PencilSquare, Plus, PlusSquare } from "react-bootstrap-icons";
 import Link from "next/link";
 import CustomTable from "../../components/custom-table";
+import { useLoader } from "../../components/loader";
 
 const Topic: NextPage = () => {
 	const router = useRouter();
+	const { showLoader, hideLoader } = useLoader();
 	const [headers] = useState(["#", "Title", "Description", "Add SubTopic"]);
 	const [showTopicFrom, setShowTopicForm] = useState(false);
 	const [topics, setTopics] = useState([]);
@@ -29,8 +31,10 @@ const Topic: NextPage = () => {
 		e.preventDefault();
 		setValidated(true);
 		if (input.title) {
+			showLoader();
 			await createTopic({ ...input });
 			const topics = await getTopic();
+			hideLoader();
 			setTopics(topics ?? []);
 			setShowTopicForm(false);
 		}

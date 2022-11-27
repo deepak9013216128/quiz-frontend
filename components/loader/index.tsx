@@ -21,10 +21,10 @@ export default function LoaderProvider({ children }: any) {
 			<LoaderContext.Provider value={{ showLoader, hideLoader }}>
 				{children}
 			</LoaderContext.Provider>
-			{open && (
+			{open ? (
 				<div
 					style={{
-						position: "absolute",
+						position: "fixed",
 						top: "0",
 						width: " 100vw",
 						height: " 100vh",
@@ -36,7 +36,7 @@ export default function LoaderProvider({ children }: any) {
 						<Spinner animation="border" variant="info" />
 					</div>
 				</div>
-			)}
+			) : null}
 		</>
 	);
 }

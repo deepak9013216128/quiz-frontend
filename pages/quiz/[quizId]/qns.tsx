@@ -10,9 +10,13 @@ import TopicDrodown from "../../../components/topic-dropdown";
 import QnsList from "../../../components/qns-list";
 import { useQns } from "../../../hooks/useQns";
 import { addQnsInQuiz } from "../../../services/quiz";
+import { useLoader } from "../../../components/loader";
+import { useToasts } from "../../../components/toast";
 
 const Qns: NextPage = () => {
 	const router = useRouter();
+	const { showLoader, hideLoader } = useLoader();
+	const { showToast } = useToasts();
 	const [topics, setTopics] = useState<any>([]);
 	const [subTopics, setSubTopics] = useState<any>([]);
 	const [topic, setTopic] = useState("");
@@ -39,7 +43,11 @@ const Qns: NextPage = () => {
 	}, [topic]);
 
 	const addQns = async (qnsId: string) => {
-		await addQnsInQuiz(router.query.quizId as string, qnsId);
+		showLoader();
+		const res = await addQnsInQuiz(router.query.quizId as string, qnsId);
+		hideLoader();
+		if (!res?.status) showToast("danger", res?.message);
+		else showToast("success", "Qns added!");
 	};
 
 	return (
