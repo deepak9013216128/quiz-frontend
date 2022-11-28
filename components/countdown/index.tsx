@@ -11,7 +11,7 @@ const Countdown = ({ key, time, onComplete }: any) => (
 		colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
 		colorsTime={[30, 15, 10, 0]}
 		rotation="counterclockwise"
-		size={120}
+		size={100}
 		onComplete={onComplete}
 	>
 		{({ remainingTime }) => <span className="h1"> {remainingTime}</span>}

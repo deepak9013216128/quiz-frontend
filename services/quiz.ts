@@ -126,9 +126,10 @@ export const updateQnsResponse = async ({ quizId, qnsId, ...body }: any) => {
 				...body,
 			},
 		});
-		if (!response?.status) {
-			throw new Error(response.message);
-		}
+		// if (!response?.status) {
+		// 	throw new Error(response.message);
+		// }
+		return response;
 	} catch (err) {
 		console.log(err);
 	}
@@ -140,9 +141,10 @@ export const submitQuiz = async (quizId: string) => {
 			url: API.STUDENT_QUIZ_URL + `/${quizId}/`,
 			method: "POST",
 		});
-		if (!response?.status) {
-			throw new Error(response.message);
-		}
+		// if (!response?.status) {
+		// 	throw new Error(response.message);
+		// }
+		return response;
 	} catch (err) {
 		console.log(err);
 	}

@@ -66,6 +66,7 @@ const Quiz: NextPage = () => {
 								q?.qns?.points,
 								q?.qns?.durationOfQns + "Sec",
 								<Trash
+									className="text-danger"
 									key={i}
 									style={{ cursor: "pointer" }}
 									onClick={() => removeQns(q?.qns?._id)}

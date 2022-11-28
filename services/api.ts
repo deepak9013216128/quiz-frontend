@@ -47,7 +47,7 @@ export const FETCH = ({
 		.then((res) => {
 			// console.log(res);
 			if ([400, 401, 402, 403].includes(res.status)) {
-				// return logout();
+				return logout();
 			}
 			return res.json();
 		})

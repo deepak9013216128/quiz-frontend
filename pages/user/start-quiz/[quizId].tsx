@@ -6,27 +6,39 @@ import { ArrowRightShort } from "react-bootstrap-icons";
 import Countdown from "../../../components/countdown";
 import Footer from "../../../components/footer";
 import Header from "../../../components/header";
+import { useLoader } from "../../../components/loader";
+import { useToasts } from "../../../components/toast";
 import { useQnsFromQuiz, useQuiz } from "../../../hooks/useQuiz";
 import { updateQnsResponse, submitQuiz } from "../../../services/quiz";
 
 const QuizTest: NextPage = () => {
 	const router = useRouter();
+	const { showLoader, hideLoader } = useLoader();
+	const { showToast } = useToasts();
 	const [qnsNo, setQnsNo] = useState(1);
 	const quizQns = useQnsFromQuiz(router.query.quizId as string);
 	const [ans, setAns] = useState<any>([]);
 	const [shouldDisplayNextBtn, setShouldDisplayNextBtn] = useState(false);
 
-	const updateAns = (ans: number) => {
-		setShouldDisplayNextBtn(true);
+	const updateAns = async (ans: number) => {
 		setAns((p: any) => [
 			...p.map((_: any, i: number) => (qnsNo - 1 === i ? ans : _)),
 		]);
-		updateQnsResponse({
+		// showLoader();
+		const res = await updateQnsResponse({
 			quizId: quizQns[qnsNo - 1]?.quiz,
 			qnsId: quizQns[qnsNo - 1]?.qns?._id,
 			ans: ans + 1,
 			timeTaken: 0,
 		});
+		// hideLoader();
+		if (res?.status) {
+			setShouldDisplayNextBtn(true);
+			localStorage.setItem("quizId", router.query.quizId as any);
+			localStorage.setItem("qnsNo", (qnsNo + 1) as any);
+		} else {
+			showToast("danger", res?.message);
+		}
 	};
 
 	const nextQns = () => {
@@ -35,17 +47,41 @@ const QuizTest: NextPage = () => {
 	};
 
 	useEffect(() => {
+		const qnsNo: number = localStorage.getItem("qnsNo") as any;
+		if (+qnsNo > 0 && router.query.quizId === localStorage.getItem("quizId")) {
+			setQnsNo(+qnsNo);
+		}
+	}, [router.query.quizId]);
+
+	useEffect(() => {
 		setAns(new Array(quizQns?.length).fill(-1));
 	}, [quizQns]);
 
 	useEffect(() => {
 		if (qnsNo && quizQns && qnsNo >= quizQns.length) {
 			//=============================== SUBMIT QUIZ ======================================
+			showLoader();
 			submitQuiz(router.query.quizId as string);
+			hideLoader();
 		}
 	}, [qnsNo]);
 
 	if (!quizQns) return <div></div>;
+	if (quizQns.length === 0) {
+		return (
+			<div className="d-flex  flex-column min-vh-100">
+				<Container className="mb-3 mt-3 text-center">
+					<h2 className="h3 m-3">Quiz link is expired!</h2>
+					<button
+						className="btn btn-success px-5"
+						onClick={() => router.push("/user/dashboard")}
+					>
+						Go to Home
+					</button>
+				</Container>
+			</div>
+		);
+	}
 	if (qnsNo && qnsNo > quizQns.length) {
 		return (
 			<div className="d-flex  flex-column min-vh-100">
@@ -65,8 +101,8 @@ const QuizTest: NextPage = () => {
 	return (
 		<div className="d-flex  flex-column min-vh-100">
 			<Container className="mb-3 mt-3">
-				<div className="d-flex justify-content-between align-items-center">
-					<h3 className="h3">
+				<div className="mb-2 d-flex justify-content-between align-items-center ">
+					<h3 className="h3 border shadow bg-light p-3">
 						Question {qnsNo}/{quizQns?.length}
 					</h3>
 
@@ -79,7 +115,7 @@ const QuizTest: NextPage = () => {
 						}}
 					/>
 				</div>
-				<Row className="justify-content-center">
+				<Row className="justify-content-center  rounded border bg-light">
 					<Col lg={7}>
 						<h1 className="h2 mt-3">
 							<ArrowRightShort /> {quizQns[qnsNo - 1]?.qns?.title}
@@ -100,11 +136,10 @@ const QuizTest: NextPage = () => {
 							</Stack>
 						</Col>
 					))}
-				</Row>
-				<Row>
+
 					<Col xs={12} className="d-flex justify-content-center">
 						<Button
-							className="bg-success"
+							className="bg-success px-5 mb-5"
 							onClick={nextQns}
 							disabled={!shouldDisplayNextBtn}
 						>
