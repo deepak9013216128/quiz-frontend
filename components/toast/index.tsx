@@ -16,6 +16,12 @@ const ToastContainer = (props: any) => (
 
 const ToastMessage = ({ type, msg, onHide }: any) => {
 	const [show, setShow] = React.useState(true);
+	React.useEffect(() => {
+		setTimeout(() => {
+			setShow(false);
+			onHide();
+		}, 5000);
+	}, []);
 	if (show) {
 		return (
 			<Alert

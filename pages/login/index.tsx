@@ -42,7 +42,6 @@ const Login: NextPage = () => {
 		showToast("success", "Login Successful");
 		goToDashboard(res?.role);
 	};
-
 	useEffect(() => {
 		goToDashboard(localStorage.getItem("role") as string);
 	}, []);

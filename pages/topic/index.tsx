@@ -14,7 +14,13 @@ import { useLoader } from "../../components/loader";
 const Topic: NextPage = () => {
 	const router = useRouter();
 	const { showLoader, hideLoader } = useLoader();
-	const [headers] = useState(["#", "Title", "Description", "Add SubTopic"]);
+	const [headers] = useState([
+		"#",
+		"Title",
+		"Description",
+		"No of SubTopic",
+		"Add SubTopic",
+	]);
 	const [showTopicFrom, setShowTopicForm] = useState(false);
 	const [topics, setTopics] = useState([]);
 	const [input, setInput] = useState({
@@ -121,9 +127,10 @@ const Topic: NextPage = () => {
 								headers={headers}
 								body={topics.map((topic: any, i) => [
 									i + 1,
-									topic.title,
-									topic.description,
-									<Link key={topic._id} href={`/topic/${topic._id}`}>
+									topic?.title,
+									topic?.description,
+									topic?.subTopicCount,
+									<Link key={topic?._id} href={`/topic/${topic?._id}`}>
 										<a>
 											<PencilSquare color="royalblue" />
 										</a>

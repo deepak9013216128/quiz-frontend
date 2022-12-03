@@ -46,7 +46,7 @@ export const FETCH = ({
 	})
 		.then((res) => {
 			// console.log(res);
-			if ([400, 401, 402, 403].includes(res.status)) {
+			if ([400, 401, 402, 403].includes(res.status) && API.LOGIN_URL !== url) {
 				return logout();
 			}
 			return res.json();
